@@ -8,7 +8,13 @@ export class InventoryPage extends BaseSwagLabPage {
 
     inventoryItems = this.page.locator('.inventory_item');
 
+    inventoryItemNames = this.page.locator('.inventory_item_name');
+
     addItemToCartButton = this.page.locator('[id^="add-to-cart"]');
+
+    sortItems = this.page.locator('.product_sort_container');
+
+    itemPrices = this.page.locator('.inventory_item_price');
 
     async addItemToCartById(id) {
         await this.addItemToCartButton.nth(id).click();
