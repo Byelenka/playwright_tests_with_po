@@ -19,4 +19,19 @@ export class InventoryPage extends BaseSwagLabPage {
     async addItemToCartById(id) {
         await this.addItemToCartButton.nth(id).click();
     }
+
+    async getProductNames() {
+        return (await this.inventoryItemNames.allInnerTexts()).map((el) => el.trim());
+    }
+
+    async getProductPrices() {
+        return (await this.itemPrices.allInnerTexts()).map((el) => parseFloat(el.replace('$', '')));
+    }
+
+    /**
+     * @param {string | import("playwright-core").ElementHandle<Node> | readonly string[] | { value?: string; label?: string; index?: number; } | readonly import("playwright-core").ElementHandle<Node>[] | readonly { value?: string; label?: string; index?: number; }[] | null} option
+     */
+    async selectSorting(option) {
+        await this.sortItems.selectOption(option);
+    }
 }

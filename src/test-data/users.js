@@ -1,8 +1,9 @@
-const user = {
-    login: 'standard_user',
-    password: 'secret_sauce',
-};
+// @ts-check
 
-module.exports = {
-    user,
+export const users = {
+    standardUser: {
+        username: 'standard_user',
+        password: 'secret_sauce',
+        role: 'standard',
+    },
 };
