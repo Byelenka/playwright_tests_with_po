@@ -21,11 +21,13 @@ export class InventoryPage extends BaseSwagLabPage {
     }
 
     async getProductNames() {
-        return (await this.inventoryItemNames.allInnerTexts()).map((el) => el.trim());
+        const productNames = await this.inventoryItemNames.allInnerTexts();
+        return productNames.map((el) => el.trim());
     }
 
     async getProductPrices() {
-        return (await this.itemPrices.allInnerTexts()).map((el) => parseFloat(el.replace('$', '')));
+        const productPrices = await this.itemPrices.allInnerTexts();
+        return productPrices.map((el) => parseFloat(el.replace('$', '')));
     }
 
     /**
