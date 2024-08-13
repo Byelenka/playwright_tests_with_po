@@ -39,23 +39,19 @@ test.describe('Tests for Shopping card', () => {
         }
 
         const itemNames = await Promise.all(chosenItems.map(async (item) => item.locator('.inventory_item_name').innerText()));
-
-        const itemDescription = await Promise.all(chosenItems.map(async (item) => item.locator('.inventory_item_desc').innerText()));
-
+        const itemDescriptions = await Promise.all(chosenItems.map(async (item) => item.locator('.inventory_item_desc').innerText()));
         const itemPrices = await Promise.all(chosenItems.map(async (item) => item.locator('.inventory_item_price').innerText()));
 
         expect(await app.inventory.getNumberOfItemsInCart()).toBe('2');
 
         await app.inventory.shoppingCart.click();
-        expect(await app.shoppingCart.cartItems.count()).toBeGreaterThanOrEqual(2);
-
         const cartItems = await app.shoppingCart.getProductNames();
         expect(cartItems).toEqual(itemNames);
 
-        const cartItemDescription = await app.shoppingCart.getProductDescription();
-        expect(cartItemDescription).toEqual(itemDescription);
+        const cartItemDescriptions = await app.shoppingCart.getProductDescriptions();
+        expect(cartItemDescriptions).toEqual(itemDescriptions);
 
-        const cartItemPrice = await app.shoppingCart.getProductPrice();
-        expect(cartItemPrice).toEqual(itemPrices);
+        const cartItemPrices = await app.shoppingCart.getProductPrices();
+        expect(cartItemPrices).toEqual(itemPrices);
     });
 });

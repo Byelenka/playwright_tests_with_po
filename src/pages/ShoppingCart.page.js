@@ -37,13 +37,13 @@ export class ShoppingCartPage extends BaseSwagLabPage {
         return productNames.map((el) => el.trim());
     }
 
-    async getProductDescription() {
-        const productDescription = await this.cartItemDescription.allInnerTexts();
-        return productDescription.map((el) => el.trim());
+    async getProductDescriptions() {
+        const productDescriptions = await this.cartItemDescription.allInnerTexts();
+        return productDescriptions.map((el) => el.trim());
     }
 
-    async getProductPrice() {
-        const productPrice = await this.cartItemPrice.allInnerTexts();
-        return productPrice.map((el) => el.trim());
+    async getProductPrices() {
+        const productPrices = await this.cartItemPrice.allInnerTexts();
+        return productPrices.map((el) => el.trim());
     }
 }
