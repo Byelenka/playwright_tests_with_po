@@ -10,7 +10,11 @@ export class InventoryPage extends BaseSwagLabPage {
 
     inventoryItemNames = this.page.locator('.inventory_item_name');
 
+    inventoryItemDescription = this.page.locator('.inventory_item_desc');
+
     addItemToCartButton = this.page.locator('[id^="add-to-cart"]');
+
+    removeItemFromCartButton = this.page.locator('[id^="remove"]');
 
     sortItems = this.page.locator('.product_sort_container');
 
@@ -18,6 +22,10 @@ export class InventoryPage extends BaseSwagLabPage {
 
     async addItemToCartById(id) {
         await this.addItemToCartButton.nth(id).click();
+    }
+
+    async AddItemToCart(index) {
+        await this.page.locator('.inventory_item [id^="add-to-cart"]').nth(index).click();
     }
 
     async getProductNames() {
