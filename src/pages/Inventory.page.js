@@ -26,10 +26,6 @@ export class InventoryPage extends BaseSwagLabPage {
         await this.addItemToCartButton.nth(id).click();
     }
 
-    async AddItemToCart(index) {
-        await this.page.locator('.inventory_item [id^="add-to-cart"]').nth(index).click();
-    }
-
     async getProductNames() {
         const productNames = await this.inventoryItemNames.allInnerTexts();
         return productNames.map((el) => el.trim());
