@@ -23,8 +23,23 @@ test.describe('Tests for Checkout', () => {
         const itemPrices = items.map((item) => item.price);
 
         await app.inventory.shoppingCart.click();
+
         await app.shoppingCart.cartCheckoutButton.click();
-        await app.checkoutStepOne.fillYourInformation(firstName, lastName, zip);
+        await expect(app.checkoutStepOne.checkoutError).toBeHidden();
+
+        await app.checkoutStepOne.checkoutContinueButton.click();
+        await expect(app.checkoutStepOne.checkoutError).toBeVisible();
+        await expect(app.checkoutStepOne.checkoutError).toHaveText('Error: First Name is required');
+
+        await app.checkoutStepOne.fillFirstName(firstName);
+        await app.checkoutStepOne.checkoutContinueButton.click();
+        await expect(app.checkoutStepOne.checkoutError).toHaveText('Error: Last Name is required');
+
+        await app.checkoutStepOne.fillLastName(lastName);
+        await app.checkoutStepOne.checkoutContinueButton.click();
+        await expect(app.checkoutStepOne.checkoutError).toHaveText('Error: Postal Code is required');
+
+        await app.checkoutStepOne.fillZip(zip);
         await app.checkoutStepOne.checkoutContinueButton.click();
 
         const checkoutItems = await app.checkoutStepTwo.getProductNames();
@@ -35,6 +50,10 @@ test.describe('Tests for Checkout', () => {
 
         const checkoutItemPrices = await app.checkoutStepTwo.getProductPrices();
         expect(checkoutItemPrices).toEqual(itemPrices);
+
+        const subTotalPrice = await app.checkoutStepTwo.calculateSubTotalPrice();
+        const subTotal = await app.checkoutStepTwo.getSubTotalPrice();
+        expect(subTotal).toEqual(subTotalPrice);
 
         const totalPrice = await app.checkoutStepTwo.calculateTotalPrice();
         const price = await app.checkoutStepTwo.getTotalPrice();

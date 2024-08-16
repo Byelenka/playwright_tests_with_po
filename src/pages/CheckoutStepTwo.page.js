@@ -1,6 +1,6 @@
 // @ts-check
 import { BaseSwagLabPage } from './BaseSwagLab.page';
-import { roundTo } from '../roundTo.helper';
+import { roundTo } from '../helpers/roundTo.helper';
 
 export class CheckoutStepTwoPage extends BaseSwagLabPage {
     url = '/checkout-step-two.html';
@@ -11,7 +11,9 @@ export class CheckoutStepTwoPage extends BaseSwagLabPage {
 
     checkoutItemPrice = this.page.locator('.inventory_item_price');
 
-    checkoutTotal = this.page.locator('.summary_total_label');
+    checkoutSubTotalPrice = this.page.locator('.summary_subtotal_label');
+
+    checkoutTotalPrice = this.page.locator('.summary_total_label');
 
     async getProductNames() {
         const productNames = await this.checkoutItemNames.allInnerTexts();
@@ -28,6 +30,19 @@ export class CheckoutStepTwoPage extends BaseSwagLabPage {
         return productPrices.map((el) => el.trim());
     }
 
+    async calculateSubTotalPrice() {
+        const productPrices = await this.getProductPrices();
+        const arrayOfPrices = productPrices.map((el) => parseFloat(el.replace('$', '')));
+        const sum = arrayOfPrices.reduce((a, b) => a + b);
+        return sum;
+    }
+
+    async getSubTotalPrice() {
+        const subTotalPrice = await this.checkoutSubTotalPrice.textContent();
+        // @ts-ignore
+        return parseFloat(subTotalPrice.match(/[\d.]+/));
+    }
+
     async calculateTotalPrice() {
         const productPrices = await this.getProductPrices();
         const arrayOfPrices = productPrices.map((el) => parseFloat(el.replace('$', '')));
@@ -36,8 +51,8 @@ export class CheckoutStepTwoPage extends BaseSwagLabPage {
     }
 
     async getTotalPrice() {
-        const totalPrice = await this.checkoutTotal.textContent();
+        const totalPrice = await this.checkoutTotalPrice.textContent();
         // @ts-ignore
-        return parseFloat(totalPrice.match(/[\d,]+\.\d{2}/));
+        return parseFloat(totalPrice.match(/[\d.]+/));
     }
 }

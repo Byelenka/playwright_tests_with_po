@@ -30,5 +30,10 @@ test.describe('Tests for Shopping card', () => {
 
         const cartItemPrices = await app.shoppingCart.getProductPrices();
         expect(cartItemPrices).toEqual(itemPrices);
+
+        await app.shoppingCart.removeCartItemById(0);
+        const cartItemsNotRemoved = await app.shoppingCart.getProductNames();
+        itemNames.shift();
+        expect(cartItemsNotRemoved).toEqual(itemNames);
     });
 });
