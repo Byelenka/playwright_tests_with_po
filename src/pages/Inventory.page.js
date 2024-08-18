@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 // @ts-check
 import { BaseSwagLabPage } from './BaseSwagLab.page';
-import { getRandomLocators } from '../getRandomLocators.helper';
+import { getRandomLocators } from '../helpers/getRandomLocators.helper';
 
 export class InventoryPage extends BaseSwagLabPage {
     url = '/inventory.html';

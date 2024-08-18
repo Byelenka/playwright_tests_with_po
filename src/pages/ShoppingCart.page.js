@@ -18,6 +18,8 @@ export class ShoppingCartPage extends BaseSwagLabPage {
 
     cartItems = this.page.locator(this.cartItemSelector);
 
+    cartCheckoutButton = this.page.locator('#checkout');
+
     // async below added to show the function returns a promise
     async getCartItemByName(name) {
         return this.page.locator(this.cartItemSelector, { hasText: name });
@@ -45,5 +47,9 @@ export class ShoppingCartPage extends BaseSwagLabPage {
     async getProductPrices() {
         const productPrices = await this.cartItemPrice.allInnerTexts();
         return productPrices.map((el) => el.trim());
+    }
+
+    async clickCheckoutButton() {
+        await this.cartCheckoutButton.click();
     }
 }
