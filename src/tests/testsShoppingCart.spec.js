@@ -20,7 +20,7 @@ test.describe('Tests for Shopping card', () => {
         const itemDescriptions = items.map((item) => item.description);
         const itemPrices = items.map((item) => item.price);
 
-        await app.inventory.shoppingCart.click();
+        await app.inventory.clickShoppingCartButton();
 
         const cartItems = await app.shoppingCart.getProductNames();
         expect(cartItems).toEqual(itemNames);
