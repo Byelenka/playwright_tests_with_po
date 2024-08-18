@@ -4,14 +4,14 @@ import { users } from '../test-data/users';
 
 const { username, password } = users.standardUser;
 
-test.beforeEach(async (
-    /** @type {{ app: import('../pages/Application').Application }} */{ app },
-) => {
-    await app.login.navigate();
-    await app.login.performLogin(username, password);
-});
-
 test.describe('Tests for Shopping card', () => {
+    test.beforeEach(async (
+        /** @type {{ app: import('../pages/Application').Application }} */{ app },
+    ) => {
+        await app.login.navigate();
+        await app.login.performLogin(username, password);
+    });
+
     test('Verify that items are added correctly to the Shopping card', async (
         /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
@@ -30,6 +30,18 @@ test.describe('Tests for Shopping card', () => {
 
         const cartItemPrices = await app.shoppingCart.getProductPrices();
         expect(cartItemPrices).toEqual(itemPrices);
+    });
+
+    test('Verify that item is removed correctly from the Shopping cart', async (
+        /** @type {{ app: import('../pages/Application').Application }} */{ app },
+    ) => {
+        const items = await app.inventory.addRandomProductsToCart();
+        const itemNames = items.map((item) => item.name);
+
+        await app.inventory.clickShoppingCartButton();
+
+        const cartItems = await app.shoppingCart.getProductNames();
+        expect(cartItems).toEqual(itemNames);
 
         await app.shoppingCart.removeCartItemById(0);
         const cartItemsNotRemoved = await app.shoppingCart.getProductNames();

@@ -4,13 +4,13 @@ import { BaseSwagLabPage } from './BaseSwagLab.page';
 export class CheckoutStepOnePage extends BaseSwagLabPage {
     url = '/checkout-step-one.html';
 
-    checkoutFirstName = this.page.locator('[id="first-name"]');
+    checkoutFirstName = this.page.locator('#first-name');
 
-    checkoutLastName = this.page.locator('[id="last-name"]');
+    checkoutLastName = this.page.locator('#last-name');
 
-    checkoutZip = this.page.locator('[id="postal-code"]');
+    checkoutZip = this.page.locator('#postal-code');
 
-    checkoutContinueButton = this.page.locator('[id="continue"]');
+    checkoutContinueButton = this.page.locator('#continue');
 
     checkoutError = this.page.locator('[data-test="error"]');
 
@@ -44,5 +44,9 @@ export class CheckoutStepOnePage extends BaseSwagLabPage {
      */
     async fillZip(zip) {
         await this.checkoutZip.fill(zip);
+    }
+
+    async clickCheckoutContinueButton() {
+        await this.checkoutContinueButton.click();
     }
 }
