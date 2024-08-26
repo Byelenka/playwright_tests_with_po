@@ -1,13 +1,20 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/base';
 
+const authFile = 'playwright/.auth/user.json';
+
+test.use({ storageState: authFile });
+
 test.describe('Saucedemo app basic tests', () => {
+    test.beforeEach(async (
+        /** @type {{ app: import('../pages/Application').Application }} */{ app, baseURL },
+    ) => {
+        await app.inventory.goto(baseURL + app.inventory.url);
+    });
+
     test('should login successfully', async (
         /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
-        await app.login.navigate();
-        await app.login.performLogin('standard_user', 'secret_sauce');
-
         await expect(app.inventory.headerTitle).toBeVisible();
 
         expect(await app.inventory.inventoryItems.count()).toBeGreaterThanOrEqual(1);
@@ -16,8 +23,6 @@ test.describe('Saucedemo app basic tests', () => {
     test('should add and remove product from the cart', async (
         /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
-        await app.login.navigate();
-        await app.login.performLogin('standard_user', 'secret_sauce');
         await app.inventory.addItemToCartById(0);
         expect(await app.inventory.getNumberOfItemsInCart()).toBe('1');
 

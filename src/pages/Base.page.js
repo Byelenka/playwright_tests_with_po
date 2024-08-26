@@ -14,7 +14,21 @@ export class BasePage {
         return this.page.url();
     }
 
-    async navigate() {
-        await this.page.goto(this.url);
+    /**
+     * @param {string} url
+     */
+    async goto(url) {
+        await this.page.goto(url);
+    }
+
+    /**
+     * @param {string | RegExp | ((url: URL) => boolean)} url
+     */
+    async waitForURL(url) {
+        await this.page.waitForURL(url);
+    }
+
+    context() {
+        return this.page.context();
     }
 }

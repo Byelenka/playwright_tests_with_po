@@ -1,15 +1,15 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/base';
-import { users } from '../test-data/users';
 
-const { username, password } = users.standardUser;
+const authFile = 'playwright/.auth/user.json';
+
+test.use({ storageState: authFile });
 
 test.describe('Tests for Shopping card', () => {
     test.beforeEach(async (
-        /** @type {{ app: import('../pages/Application').Application }} */{ app },
+        /** @type {{ app: import('../pages/Application').Application }} */{ app, baseURL },
     ) => {
-        await app.login.navigate();
-        await app.login.performLogin(username, password);
+        await app.inventory.goto(baseURL + app.inventory.url);
     });
 
     test('Verify that items are added correctly to the Shopping card', async (
