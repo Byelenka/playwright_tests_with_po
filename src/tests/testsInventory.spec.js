@@ -24,9 +24,9 @@ const testData = [
 
 testData.forEach((data) => {
     test.beforeEach(async (
-        /** @type {{ app: import('../pages/Application').Application }} */{ app, baseURL },
+        /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
-        await app.inventory.goto(baseURL + app.inventory.url);
+        await app.inventory.goto(app.inventory.url);
     });
 
     test(`Verify that sorting works correctly for sorting ${data.sortBy}`, async (

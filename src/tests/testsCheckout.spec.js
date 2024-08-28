@@ -10,9 +10,9 @@ test.use({ storageState: authFile });
 
 test.describe('Tests for Checkout', () => {
     test.beforeEach(async (
-        /** @type {{ app: import('../pages/Application').Application }} */{ app, baseURL },
+        /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
-        await app.inventory.goto(baseURL + app.inventory.url);
+        await app.inventory.goto(app.inventory.url);
     });
 
     test('Items and total price are correct on checkout', async (

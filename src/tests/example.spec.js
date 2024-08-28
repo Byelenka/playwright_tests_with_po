@@ -7,9 +7,9 @@ test.use({ storageState: authFile });
 
 test.describe('Saucedemo app basic tests', () => {
     test.beforeEach(async (
-        /** @type {{ app: import('../pages/Application').Application }} */{ app, baseURL },
+        /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
-        await app.inventory.goto(baseURL + app.inventory.url);
+        await app.inventory.goto(app.inventory.url);
     });
 
     test('should login successfully', async (
