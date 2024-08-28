@@ -58,19 +58,35 @@ module.exports = defineConfig({
 
     /* Configure projects for major browsers */
     projects: [
+        // Setup project
+        { name: 'setup', testMatch: /.*\.setup\.js/ },
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                ...devices['Desktop Chrome'],
+                // Use prepared auth state.
+                storageState: 'playwright/.auth/user.json',
+            },
+            dependencies: ['setup'],
         },
-
         {
             name: 'webkit',
-            use: { ...devices['Desktop Safari'] },
+            use: {
+                ...devices['Desktop Safari'],
+                // Use prepared auth state.
+                storageState: 'playwright/.auth/user.json',
+            },
+            dependencies: ['setup'],
         },
 
         {
             name: 'firefox',
-            use: { ...devices['Desktop Firefox'] },
+            use: {
+                ...devices['Desktop Firefox'],
+                // Use prepared auth state.
+                storageState: 'playwright/.auth/user.json',
+            },
+            dependencies: ['setup'],
         },
 
         /* Test against mobile viewport. */

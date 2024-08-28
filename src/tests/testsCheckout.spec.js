@@ -1,17 +1,18 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/base';
-import { users } from '../test-data/users';
 import { usersInfo } from '../test-data/usersInfo';
 
-const { username, password } = users.standardUser;
 const { firstName, lastName, zip } = usersInfo.standardUserInfo;
+
+const authFile = 'playwright/.auth/user.json';
+
+test.use({ storageState: authFile });
 
 test.describe('Tests for Checkout', () => {
     test.beforeEach(async (
         /** @type {{ app: import('../pages/Application').Application }} */{ app },
     ) => {
-        await app.login.navigate();
-        await app.login.performLogin(username, password);
+        await app.inventory.goto(app.inventory.url);
     });
 
     test('Items and total price are correct on checkout', async (
